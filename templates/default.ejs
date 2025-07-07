@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>META VPN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+        .config-card {
+            transition: all 0.2s ease;
+        }
+        .config-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .copy-btn {
+            transition: all 0.2s ease;
+        }
+        .copy-btn:hover {
+            transform: scale(1.05);
+        }
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-white rounded-xl shadow-sm overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-primary-600 to-primary-500 p-6 text-white">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold"><%= data.title %></h1>
+                    <p class="text-primary-100 mt-1">مدیریت کانفیگ‌های VPN</p>
+                </div>
+                <a href="#" class="text-primary-200 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Subscription Info -->
+        <div class="p-6 border-b border-gray-100">
+            <div class="bg-primary-50 rounded-lg p-4">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="bg-primary-100 p-2 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="font-medium text-gray-800">شناسه اشتراک: <span class="text-primary-600"><%= data.id || 'N/A' %></span></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Config Cards -->
+        <div class="p-6 space-y-4">
+            <% data.parsedLinks.forEach((item, index) => { %>
+                <div class="config-card bg-white border border-gray-200 rounded-lg p-5 hover:shadow-md">
+                    <div class="flex items-start space-x-3 space-x-reverse">
+                        <div class="bg-primary-100 p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-600" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-medium text-gray-800">
+                                    <%= item.type || 'Unknown' %>
+                                </h3>
+                                <span class="text-xs bg-primary-100 text-primary-800 px-2 py-1 rounded-full">
+                                    کانفیگ <%= index + 1 %>
+                                </span>
+                            </div>
+                            <div class="mt-3">
+                                <code class="block bg-gray-50 p-3 rounded-lg text-sm text-gray-700 font-mono break-all overflow-x-auto dir-ltr">
+                                    <%= item.raw %>
+                                </code>
+                                <button class="copy-btn mt-2 w-full bg-primary-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1">
+                                    کپی کانفیگ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced copy functionality with toast notification
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const code = e.target.closest('.mt-3').querySelector('code').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    // Create toast notification
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-primary-600 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in';
+                    toast.textContent = 'کانفیگ با موفقیت کپی شد!';
+                    document.body.appendChild(toast);
+                    
+                    // Remove toast after 2 seconds
+                    setTimeout(() => {
+                        toast.classList.add('animate-fade-out');
+                        setTimeout(() => toast.remove(), 300);
+                    }, 2000);
+                });
+            });
+        });
+
+        // Close button functionality
+        document.querySelector('a[href="#"]').addEventListener('click', (e) => {
+            e.preventDefault();
+            // You can add close window functionality here
+            alert('بستن پنجره');
+        });
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 10px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translate(-50%, 0); }
+            to { opacity: 0; transform: translate(-50%, 10px); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        .animate-fade-out {
+            animation: fadeOut 0.3s ease-in forwards;
+        }
+        .dir-ltr {
+            direction: ltr;
+            text-align: left;
+        }
+    </style>
+</body>
+</html>
