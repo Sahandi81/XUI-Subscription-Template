@@ -184,7 +184,7 @@
   <script>
     document.querySelectorAll('.copy-btn').forEach(button => {
       button.addEventListener('click', (e) => {
-        const code = e.target.closest('.mt-3').querySelector('code').textContent;
+        const code = e.target.closest('.mt-3').querySelector('code').textContent.trim();
         copyToClipboard(code);
       });
     });
