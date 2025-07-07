@@ -68,13 +68,13 @@ nano config.env
 ### Using Node (for development only):
 
 ```bash
-node index.js
+node server.js
 ```
 
 ### Using PM2 (recommended for production):
 
 ```bash
-pm2 start index.js --name xui-sub-template
+pm2 start server.js --name xui-sub-template
 ```
 
 To persist across reboots:

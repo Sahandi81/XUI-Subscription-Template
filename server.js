@@ -37,10 +37,10 @@ app.get("/sub/:id", async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).send("Subscription could not be fetched or decoded." + err);
+    res.status(500).send("Subscription could not be fetched or decoded. " +  BASE_SUB_URL +id);
   }
 });
-  
+
 app.listen(SUB_HTTP_PORT, process.env.HOST || '0.0.0.0', () => {
   console.log(`Server running on http://${process.env.HOST || '0.0.0.0'}:${SUB_HTTP_PORT}`);
 });
